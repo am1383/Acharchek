@@ -2,7 +2,4 @@
 
 namespace App\Modules\Auth\Services\Contracts;
 
-interface UserServiceInterface
-{
-    
-}
+interface UserServiceInterface {}

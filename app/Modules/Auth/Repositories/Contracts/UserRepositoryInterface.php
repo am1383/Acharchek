@@ -2,4 +2,9 @@
 
 namespace App\Modules\Auth\Repositories\Contracts;
 
-interface UserRepositoryInterface {}
+use App\Modules\Auth\Models\User;
+
+interface UserRepositoryInterface
+{
+    public function findByPhoneNumber(string $phoneNumber): User;
+}

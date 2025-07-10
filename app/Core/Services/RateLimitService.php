@@ -4,6 +4,7 @@ namespace App\Core\Services;
 
 use App\Core\Services\Contracts\RateLimitServiceInterface;
 use App\Core\Services\Contracts\ResponseServiceInterface;
+use App\Exceptions\RateLimitException;
 use Constants;
 use Illuminate\Support\Facades\RateLimiter;
 use TimeHelper;
@@ -12,34 +13,34 @@ class RateLimitService implements RateLimitServiceInterface
 {
     public function __construct(private ResponseServiceInterface $responseService) {}
 
-    public function isRateLimited(string $ip, string $phoneNumber): ?array
+    public function isRateLimited(string $ip, string $phoneNumber): void
     {
         $maxAttemptsVerifyLogin = 20;
         $maxAttemptsVerification = 1;
 
-        return $this->isVerifyLoginRateLimited($ip, $phoneNumber, $maxAttemptsVerifyLogin, Constants::ERROR_RATE_LIMITER_100);
-        $this->isPhoneVerificationRateLimited($ip, $phoneNumber, $maxAttemptsVerification, Constants::ERROR_PHONE_VERIFICATION_RATE_LIMIT_100);
+        $this->isVerifyLoginRateLimited($ip, $phoneNumber, Constants::ERROR_RATE_LIMITER_100, $maxAttemptsVerifyLogin);
+        $this->isPhoneVerificationRateLimited($ip, $phoneNumber, Constants::ERROR_PHONE_VERIFICATION_RATE_LIMIT_100, $maxAttemptsVerification);
     }
 
-    private function isVerifyLoginRateLimited(string $ip, string $phoneNumber, int $maxAttempts, string $messageCode): ?array
+    public function isVerifyLoginRateLimited(string $ip, string $phoneNumber, string $messageCode, int $maxAttempts = 20): void
     {
-        $prefix = 'rl_verify_login_';
+        $prefix = Constants::PREFIX_VERIFY_LOGIN;
         $ipKey = $prefix.$ip;
         $phoneKey = $prefix.$phoneNumber;
 
-        return $this->validateRateLimit($ipKey, $phoneKey, $maxAttempts, $messageCode);
+        $this->validateRateLimit($ipKey, $phoneKey, $maxAttempts, $messageCode);
     }
 
-    private function isPhoneVerificationRateLimited(string $ip, string $phoneNumber, int $maxAttempts, $messageCode): ?array
+    private function isPhoneVerificationRateLimited(string $ip, string $phoneNumber, string $messageCode, int $maxAttempts = 1): void
     {
-        $prefix = 'rl_verify_code_';
+        $prefix = Constants::PREFIX_VERIFY_CODE;
         $ipKey = $prefix.$ip;
         $phoneKey = $prefix.$phoneNumber;
 
-        return $this->validateRateLimit($ipKey, $phoneKey, $maxAttempts, $messageCode);
+        $this->validateRateLimit($ipKey, $phoneKey, $maxAttempts, $messageCode);
     }
 
-    private function validateRateLimit(string $ipKey, string $phoneKey, int $maxAttemptsLimit, string $messageCode): ?array
+    private function validateRateLimit(string $ipKey, string $phoneKey, int $maxAttemptsLimit, string $messageCode): void
     {
         if (RateLimiter::tooManyAttempts($ipKey, $maxAttemptsLimit) or
             RateLimiter::tooManyAttempts($phoneKey, $maxAttemptsLimit)) {
@@ -51,20 +52,27 @@ class RateLimitService implements RateLimitServiceInterface
             $time = TimeHelper::translateSeconds($seconds);
             $message = sprintf($messageCode, $time);
 
-            return $this->responseService->result(false, ['seconds' => $seconds], $messageCode, $message);
+            throw new RateLimitException($seconds, $messageCode, $message);
         }
-
-        return null;
     }
 
-    public function rateLimitHit(): void
+    public function rateLimitHitLogin(): void
     {
-        $prefixVerifyLogin = 'rl_verify_login_';
-        $prefixVerifyCode = 'rl_verify_code_';
         $decaySeconds = 60 * 60;
 
-        $this->hit($prefixVerifyLogin, $decaySeconds);
-        $this->hit($prefixVerifyCode, $decaySeconds);
+        $this->hit(Constants::PREFIX_VERIFY_LOGIN, $decaySeconds);
+        $this->hit(Constants::PREFIX_VERIFY_CODE, $decaySeconds);
+    }
+
+    public function rateLimitHitVerifyLogin(string $ip, string $phoneNumber): void
+    {
+        $decaySeconds = 60 * 60;
+        $prefix = Constants::PREFIX_VERIFY_LOGIN;
+        $ipKey = 'rl_verify_login_'.$ip;
+        $phoneKey = 'rl_verify_login_'.$phoneNumber;
+
+        $this->hit($ipKey, $decaySeconds);
+        $this->hit($phoneKey, $decaySeconds);
     }
 
     private function hit(string $key, int $decaySeconds): void

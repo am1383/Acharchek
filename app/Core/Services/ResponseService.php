@@ -11,16 +11,14 @@ class ResponseService implements ResponseServiceInterface
     {
         $result = ['ok' => $status];
 
-        if (! is_null($data)) {
-            $result['data'] = $data;
-        }
-
-        if ($messageCode) {
+        if (! is_null($messageCode)) {
             $messageText = MessageCode::messageText($messageCode);
+            $userMessage = $message ?? $messageText;
+
             $result['message'] = [
                 'code' => $messageCode,
                 'text' => $messageText,
-                'user' => $message ?? $messageText,
+                'user' => $userMessage,
             ];
         }
 

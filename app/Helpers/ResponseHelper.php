@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Services\Response;
+namespace App\Helpers;
 
 use App\Constants\MessageCode;
-use App\Core\Services\Contracts\ResponseServiceInterface;
 
-class ResponseService implements ResponseServiceInterface
+class ResponseHelper
 {
-    public function result(bool $status, ?array $data = null, ?string $messageCode = null, ?string $message = null): array
+    public static function result(bool $status, ?array $data = null, ?string $messageCode = null, ?string $message = null): array
     {
-        $result = ['ok' => $status];
+        $result = ['status' => $status];
 
         if (! is_null($messageCode)) {
             $messageText = MessageCode::messageText($messageCode);

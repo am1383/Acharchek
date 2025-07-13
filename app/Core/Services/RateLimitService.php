@@ -2,16 +2,16 @@
 
 namespace App\Core\Services;
 
+use App\Constants\Constants;
+use App\Constants\RateLimitConstants;
 use App\Core\Services\Contracts\RateLimitServiceInterface;
-use App\Core\Services\Contracts\ResponseServiceInterface;
-use App\Exceptions\RateLimitException;
-use Constants;
+use App\Exceptions\ErrorResponseException;
+use App\Helpers\TimeHelper;
 use Illuminate\Support\Facades\RateLimiter;
-use TimeHelper;
 
 class RateLimitService implements RateLimitServiceInterface
 {
-    public function __construct(private ResponseServiceInterface $responseService) {}
+    public function __construct() {}
 
     public function isRateLimited(string $ip, string $phoneNumber): void
     {
@@ -52,13 +52,13 @@ class RateLimitService implements RateLimitServiceInterface
             $time = TimeHelper::translateSeconds($seconds);
             $message = sprintf($messageCode, $time);
 
-            throw new RateLimitException($seconds, $messageCode, $message);
+            throw new ErrorResponseException(false, ['seconds' => $seconds], $messageCode, $message);
         }
     }
 
     public function rateLimitHitLogin(): void
     {
-        $decaySeconds = 60 * 60;
+        $decaySeconds = RateLimitConstants::DECAY_SECONDS;
 
         $this->hit(Constants::PREFIX_VERIFY_LOGIN, $decaySeconds);
         $this->hit(Constants::PREFIX_VERIFY_CODE, $decaySeconds);
@@ -66,16 +66,16 @@ class RateLimitService implements RateLimitServiceInterface
 
     public function rateLimitHitVerifyLogin(string $ip, string $phoneNumber): void
     {
-        $decaySeconds = 60 * 60;
+        $decaySeconds = RateLimitConstants::DECAY_SECONDS;
         $prefix = Constants::PREFIX_VERIFY_LOGIN;
-        $ipKey = 'rl_verify_login_'.$ip;
-        $phoneKey = 'rl_verify_login_'.$phoneNumber;
+        $ipKey = $prefix.$ip;
+        $phoneKey = $prefix.$phoneNumber;
 
         $this->hit($ipKey, $decaySeconds);
         $this->hit($phoneKey, $decaySeconds);
     }
 
-    private function hit(string $key, int $decaySeconds): void
+    public function hit(string $key, int $decaySeconds = RateLimitConstants::DECAY_SECONDS): void
     {
         RateLimiter::hit($key, $decaySeconds);
     }

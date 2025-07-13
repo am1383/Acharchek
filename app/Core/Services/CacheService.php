@@ -2,9 +2,11 @@
 
 namespace App\Core\Services;
 
+use App\Constants\CacheConstants;
+use App\Constants\Constants;
+use App\Constants\MessageCode;
 use App\Core\Services\Contracts\CacheServiceInterface;
-use App\Exceptions\VerificationCodeException;
-use Constants;
+use App\Exceptions\ErrorResponseException;
 use Illuminate\Support\Facades\Cache;
 
 class CacheService implements CacheServiceInterface
@@ -16,14 +18,9 @@ class CacheService implements CacheServiceInterface
         $this->forget($keyPhone);
     }
 
-    private function forget(string $key): void
-    {
-        Cache::forget($key);
-    }
-
     public function putVerificationCode(string $phoneNumber, string $verificationCode): int
     {
-        $phoneVerificationTime = 60 * 4;
+        $phoneVerificationTime = CacheConstants::PHONE_VERIFICATION_TIME;
         $key = Constants::PREFIX_PHONE_VERIFICATION.$phoneNumber;
 
         $this->put($key, $verificationCode, $phoneVerificationTime);
@@ -31,23 +28,34 @@ class CacheService implements CacheServiceInterface
         return $phoneVerificationTime;
     }
 
-    private function put(string $key, string $value, int $ttl): void
-    {
-        Cache::put($key, $value, $ttl);
-    }
-
     public function getVerificationCodeOrFail(): string
     {
         $verificationCode = $this->get(Constants::PREFIX_PHONE_VERIFICATION);
 
-        if (! $verificationCode) {
-            throw new VerificationCodeException;
-        }
+        throw_if(
+            ! $verificationCode,
+            throw new ErrorResponseException(false, null, MessageCode::ERROR_PHONE_VERIFICATION_102)
+        );
 
         return $verificationCode;
     }
 
-    private function get(string $key): mixed
+    public function putSessionKey(string $sessionKey, array $sessionData): void
+    {
+        $this->put($sessionKey, $sessionData, CacheConstants::SESSION_TIME);
+    }
+
+    public function put(string $key, mixed $value, int $ttl): void
+    {
+        Cache::put($key, $value, $ttl);
+    }
+
+    public function forget(string $key): void
+    {
+        Cache::forget($key);
+    }
+
+    public function get(string $key): mixed
     {
         return Cache::get($key);
     }

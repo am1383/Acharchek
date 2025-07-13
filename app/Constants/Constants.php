@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Constants;
+
 class Constants
 {
     public const ERROR_RATE_LIMITER_100 = 'تعداد دفعات تلاش شما بیش از حد مجاز بوده است. لطفا پس از %s دوباره تلاش کنید!';
@@ -11,4 +13,6 @@ class Constants
     public const PREFIX_VERIFY_CODE = 'rl_verify_code_';
 
     public const PREFIX_PHONE_VERIFICATION = 'phone_verification_';
+
+    public const PREFIX_VERIFY_REGISTER = 'rl_register_user_';
 }

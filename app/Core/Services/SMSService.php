@@ -2,12 +2,11 @@
 
 namespace App\Core\Services;
 
-use App\Core\Services\Contracts\ResponseServiceInterface;
 use App\Core\Services\Contracts\SMSServiceInterface;
 
 class SMSService implements SMSServiceInterface
 {
-    public function __construct(private ResponseServiceInterface $responseService) {}
+    public function __construct() {}
 
     public function sendSMSVerificationCode(): string
     {

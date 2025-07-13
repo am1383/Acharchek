@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helpers;
+
 class TimeHelper
 {
     public static function translateSeconds(int $seconds): string

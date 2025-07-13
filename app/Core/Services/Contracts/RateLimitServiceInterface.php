@@ -11,4 +11,6 @@ interface RateLimitServiceInterface
     public function rateLimitHitVerifyLogin(string $ip, string $phoneNumber): void;
 
     public function rateLimitHitLogin(): void;
+
+    public function hit(string $key, int $decaySeconds = 60 * 60): void;
 }

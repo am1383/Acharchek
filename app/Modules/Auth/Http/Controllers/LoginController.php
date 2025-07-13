@@ -6,6 +6,7 @@ use App\Modules\Auth\DTOs\LoginDTO;
 use App\Modules\Auth\DTOs\VerifyLoginDTO;
 use App\Modules\Auth\Requests\LoginRequest;
 use App\Modules\Auth\Resources\LoginResource;
+use App\Modules\Auth\Resources\VerifyLoginResource;
 use App\Modules\Auth\Services\Contracts\LoginServiceInterface;
 
 class LoginController
@@ -19,9 +20,11 @@ class LoginController
         return new LoginResource($this->loginService->handleLogin($loginDTO));
     }
 
-    public function verifyLogin(LoginRequest $request)
+    public function verifyLogin(LoginRequest $request): VerifyLoginResource
     {
         $verifyLoginDTO = VerifyLoginDTO::fromRequest($request->validated());
 
+        return new VerifyLoginResource($this->loginService
+            ->verifyLogin($verifyLoginDTO));
     }
 }

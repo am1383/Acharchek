@@ -34,6 +34,9 @@ class RegisterService implements RegisterServiceInterface
     {
         $sessionKey = $registerDTO->sessionKey;
         $businessTel = $registerDTO->businessTel;
+        $isBusinessOwner = 1;
+        $smsCredit = 0;
+        $businessServicesIds = '';
 
         $sessionData = $this->cacheService->get($sessionKey);
 
@@ -45,17 +48,7 @@ class RegisterService implements RegisterServiceInterface
 
         $businessCity = $this->location->cityRepository->findOrFailById($registerDTO->businessCityId, $businessProvince->id, ['id', 'title']);
 
-        $businessServicesIds = '';
-
-        if (! empty($businessServicesIds)) {
-            $validIds = $this->business->businessServiceRepository->getAllIds();
-            $inputIds = array_map('trim', explode('-', $businessServicesIds));
-
-            $filteredIds = array_filter($inputIds, function ($id) use ($validIds) {
-                return ctype_digit($id) && in_array($id, $validIds);
-            });
-            $businessServicesIds = implode('-', $filteredIds);
-        }
+        $activeBusinessId = $this->getBusinessId($businessServicesIds);
 
         DB::beginTransaction();
 
@@ -63,9 +56,9 @@ class RegisterService implements RegisterServiceInterface
             $user = $this->userRepository->create([
                 'phone' => $sessionData['phone'],
                 'full_name' => $registerDTO->userFullName,
-                'sms_credit' => 0,
+                'sms_credit' => $smsCredit,
                 'active_business_id' => $businessServicesIds,
-                'is_business_owner' => 1,
+                'is_business_owner' => $isBusinessOwner,
                 'registered_at' => now()->toDateTimeString(),
             ]);
 
@@ -87,7 +80,7 @@ class RegisterService implements RegisterServiceInterface
 
             $this->userRepository->updateOrFail([
                 'active_business_id' => $activeBusinessId,
-                'is_business_owner' => 1,
+                'is_business_owner' => $isBusinessOwner,
             ]);
 
             DB::commit();
@@ -110,6 +103,21 @@ class RegisterService implements RegisterServiceInterface
 
             return ResponseHelper::result(false, null, MessageCode::ERROR_DATABASE_100);
         }
+    }
+
+    private function getBusinessId(string $businessServicesIds): string
+    {
+        if (! empty($businessServicesIds)) {
+            $validIds = $this->business->businessServiceRepository->getAllIds();
+            $inputIds = array_map('trim', explode('-', $businessServicesIds));
+
+            $filteredIds = array_filter($inputIds, function ($id) use ($validIds) {
+                return ctype_digit($id) && in_array($id, $validIds);
+            });
+            $businessServicesIds = implode('-', $filteredIds);
+        }
+
+        return $businessServicesIds;
     }
 
     private function prepareUserInfo(User $user): array

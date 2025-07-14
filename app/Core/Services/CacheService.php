@@ -3,8 +3,8 @@
 namespace App\Core\Services;
 
 use App\Constants\CacheConstants;
-use App\Constants\Constants;
 use App\Constants\MessageCode;
+use App\Constants\PrefixConstants;
 use App\Core\Services\Contracts\CacheServiceInterface;
 use App\Exceptions\ErrorResponseException;
 use Illuminate\Support\Facades\Cache;
@@ -13,7 +13,7 @@ class CacheService implements CacheServiceInterface
 {
     public function forgetPhoneVerificationCode(string $phoneNumber): void
     {
-        $keyPhone = Constants::PREFIX_PHONE_VERIFICATION.$phoneNumber;
+        $keyPhone = PrefixConstants::PREFIX_PHONE_VERIFICATION.$phoneNumber;
 
         $this->forget($keyPhone);
     }
@@ -21,7 +21,7 @@ class CacheService implements CacheServiceInterface
     public function putVerificationCode(string $phoneNumber, string $verificationCode): int
     {
         $phoneVerificationTime = CacheConstants::PHONE_VERIFICATION_TIME;
-        $key = Constants::PREFIX_PHONE_VERIFICATION.$phoneNumber;
+        $key = PrefixConstants::PREFIX_PHONE_VERIFICATION.$phoneNumber;
 
         $this->put($key, $verificationCode, $phoneVerificationTime);
 
@@ -30,7 +30,7 @@ class CacheService implements CacheServiceInterface
 
     public function getVerificationCodeOrFail(): string
     {
-        $verificationCode = $this->get(Constants::PREFIX_PHONE_VERIFICATION);
+        $verificationCode = $this->get(PrefixConstants::PREFIX_PHONE_VERIFICATION);
 
         throw_if(
             ! $verificationCode,

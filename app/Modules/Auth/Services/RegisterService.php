@@ -2,8 +2,8 @@
 
 namespace App\Modules\Auth\Services;
 
-use App\Constants\Constants;
 use App\Constants\MessageCode;
+use App\Constants\PrefixConstants;
 use App\Core\Services\Contracts\CacheServiceInterface;
 use App\Core\Services\Contracts\RateLimitServiceInterface;
 use App\Events\NewLogin;
@@ -129,7 +129,7 @@ class RegisterService implements RegisterServiceInterface
 
     private function hitRateLimitKey(string $ip): void
     {
-        $ipKey = Constants::PREFIX_VERIFY_REGISTER.$ip;
+        $ipKey = PrefixConstants::PREFIX_VERIFY_REGISTER.$ip;
 
         $this->rateLimitService->hit($ipKey);
     }

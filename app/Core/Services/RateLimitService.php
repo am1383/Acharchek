@@ -2,8 +2,8 @@
 
 namespace App\Core\Services;
 
-use App\Constants\Constants;
 use App\Constants\MessageCode;
+use App\Constants\PrefixConstants;
 use App\Constants\RateLimitConstants;
 use App\Core\Services\Contracts\RateLimitServiceInterface;
 use App\Exceptions\ErrorResponseException;
@@ -16,16 +16,18 @@ class RateLimitService implements RateLimitServiceInterface
 
     public function isRateLimited(string $ip, string $phoneNumber): void
     {
-        $maxAttemptsVerifyLogin = 20;
-        $maxAttemptsVerification = 1;
+        $maxAttemptsVerifyLogin = RateLimitConstants::MAX_ATTEMPTS_VERIFY_LOGIN;
+        $maxAttemptsVerification = RateLimitConstants::MAX_ATTEMPTS_VERIFICATION;
 
-        $this->isVerifyLoginRateLimited($ip, $phoneNumber, Messagecode::messageText(MessageCode::ERROR_RATE_LIMITER_100), $maxAttemptsVerifyLogin);
-        $this->isPhoneVerificationRateLimited($ip, $phoneNumber, MessageCode::messageText(MessageCode::ERROR_PHONE_VERIFICATION_RATE_LIMIT_100), $maxAttemptsVerification);
+        $this->isVerifyLoginRateLimited($ip, $phoneNumber,
+            Messagecode::messageText(MessageCode::ERROR_RATE_LIMITER_100), $maxAttemptsVerifyLogin);
+        $this->isPhoneVerificationRateLimited($ip, $phoneNumber,
+            MessageCode::messageText(MessageCode::ERROR_PHONE_VERIFICATION_RATE_LIMIT_100), $maxAttemptsVerification);
     }
 
     public function isVerifyLoginRateLimited(string $ip, string $phoneNumber, string $messageCode, int $maxAttempts = 20): void
     {
-        $prefix = Constants::PREFIX_VERIFY_LOGIN;
+        $prefix = PrefixConstants::PREFIX_VERIFY_LOGIN;
         $ipKey = $prefix.$ip;
         $phoneKey = $prefix.$phoneNumber;
 
@@ -34,7 +36,7 @@ class RateLimitService implements RateLimitServiceInterface
 
     private function isPhoneVerificationRateLimited(string $ip, string $phoneNumber, string $messageCode, int $maxAttempts = 1): void
     {
-        $prefix = Constants::PREFIX_VERIFY_CODE;
+        $prefix = PrefixConstants::PREFIX_VERIFY_CODE;
         $ipKey = $prefix.$ip;
         $phoneKey = $prefix.$phoneNumber;
 
@@ -61,14 +63,14 @@ class RateLimitService implements RateLimitServiceInterface
     {
         $decaySeconds = RateLimitConstants::DECAY_SECONDS;
 
-        $this->hit(Constants::PREFIX_VERIFY_LOGIN, $decaySeconds);
-        $this->hit(Constants::PREFIX_VERIFY_CODE, $decaySeconds);
+        $this->hit(PrefixConstants::PREFIX_VERIFY_LOGIN, $decaySeconds);
+        $this->hit(PrefixConstants::PREFIX_VERIFY_CODE, $decaySeconds);
     }
 
     public function rateLimitHitVerifyLogin(string $ip, string $phoneNumber): void
     {
         $decaySeconds = RateLimitConstants::DECAY_SECONDS;
-        $prefix = Constants::PREFIX_VERIFY_LOGIN;
+        $prefix = PrefixConstants::PREFIX_VERIFY_LOGIN;
         $ipKey = $prefix.$ip;
         $phoneKey = $prefix.$phoneNumber;
 

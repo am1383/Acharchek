@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-class Constants
+class PrefixConstants
 {
     public const PREFIX_VERIFY_LOGIN = 'rl_verify_login_';
 

@@ -2,7 +2,6 @@
 
 namespace App\Modules\Auth\Services;
 
-use App\Constants\Constants;
 use App\Constants\MessageCode;
 use App\Core\Services\Contracts\CacheServiceInterface;
 use App\Core\Services\Contracts\RateLimitServiceInterface;
@@ -43,7 +42,8 @@ class LoginService implements LoginServiceInterface
 
     public function verifyLogin(VerifyLoginDTO $verifyLoginDTO): array
     {
-        $this->rateLimitService->isVerifyLoginRateLimited($verifyLoginDTO->ip, $verifyLoginDTO->phoneNumber, Constants::ERROR_RATE_LIMITER_100);
+        $this->rateLimitService->isVerifyLoginRateLimited($verifyLoginDTO->ip, $verifyLoginDTO->phoneNumber,
+            MessageCode::messageText(MessageCode::ERROR_RATE_LIMITER_100));
 
         $verificationCode = $this->cacheService->getVerificationCodeOrFail();
 

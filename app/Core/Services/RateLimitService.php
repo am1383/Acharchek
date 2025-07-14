@@ -3,6 +3,7 @@
 namespace App\Core\Services;
 
 use App\Constants\Constants;
+use App\Constants\MessageCode;
 use App\Constants\RateLimitConstants;
 use App\Core\Services\Contracts\RateLimitServiceInterface;
 use App\Exceptions\ErrorResponseException;
@@ -18,8 +19,8 @@ class RateLimitService implements RateLimitServiceInterface
         $maxAttemptsVerifyLogin = 20;
         $maxAttemptsVerification = 1;
 
-        $this->isVerifyLoginRateLimited($ip, $phoneNumber, Constants::ERROR_RATE_LIMITER_100, $maxAttemptsVerifyLogin);
-        $this->isPhoneVerificationRateLimited($ip, $phoneNumber, Constants::ERROR_PHONE_VERIFICATION_RATE_LIMIT_100, $maxAttemptsVerification);
+        $this->isVerifyLoginRateLimited($ip, $phoneNumber, Messagecode::messageText(MessageCode::ERROR_RATE_LIMITER_100), $maxAttemptsVerifyLogin);
+        $this->isPhoneVerificationRateLimited($ip, $phoneNumber, MessageCode::messageText(MessageCode::ERROR_PHONE_VERIFICATION_RATE_LIMIT_100), $maxAttemptsVerification);
     }
 
     public function isVerifyLoginRateLimited(string $ip, string $phoneNumber, string $messageCode, int $maxAttempts = 20): void

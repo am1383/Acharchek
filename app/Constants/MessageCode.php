@@ -14,6 +14,8 @@ class MessageCode
 
     public const ERROR_VALIDATION_103 = 'error.validation.103';
 
+    public const ERROR_PHONE_VERIFICATION_RATE_LIMIT_100 = 'error.phone_verification.rate_limit.100';
+
     public const ERROR_PHONE_VERIFICATION_100 = 'error.phone_verification.100';
 
     public const ERROR_PHONE_VERIFICATION_101 = 'error.phone_verification.101';
@@ -59,8 +61,9 @@ class MessageCode
             self::ERROR_PHONE_VERIFICATION_100 => 'بین ارسال هر کد تایید باید حدود 2 دقیقه صبر کنید!',
             self::ERROR_PHONE_VERIFICATION_101 => 'مهلت استفاده از کد تایید تمام شده است. لطفا جهت ارسال کد تایید جدید اقدام کنید!',
             self::ERROR_PHONE_VERIFICATION_102 => 'کد تایید وارد شده صحیح نیست. لطفا در وارد کردن کد تایید دقت کنید!',
+            self::ERROR_PHONE_VERIFICATION_RATE_LIMIT_100 => 'لطفا جهت ارسال کد تایید جدید %s ثانیه صبر کنید!',
 
-            self::ERROR_RATE_LIMITER_100 => 'تعداد دفعات تلاش بیش از حد مجاز بوده است!',
+            self::ERROR_RATE_LIMITER_100 => 'تعداد دفعات تلاش شما بیش از حد مجاز بوده است. لطفا پس از %s دوباره تلاش کنید!',
 
             self::ERROR_USER_REGISTRATION_100 => 'جلسه ثبت نام یافت نشد!',
 

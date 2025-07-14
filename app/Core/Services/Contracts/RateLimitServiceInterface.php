@@ -2,6 +2,8 @@
 
 namespace App\Core\Services\Contracts;
 
+use App\Constants\RateLimitConstants;
+
 interface RateLimitServiceInterface
 {
     public function isRateLimited(string $ip, string $phoneNumber): void;
@@ -12,5 +14,5 @@ interface RateLimitServiceInterface
 
     public function rateLimitHitLogin(): void;
 
-    public function hit(string $key, int $decaySeconds = 60 * 60): void;
+    public function hit(string $key, int $decaySeconds = RateLimitConstants::DECAY_SECONDS): void;
 }

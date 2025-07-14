@@ -6,5 +6,5 @@ use App\Modules\Auth\DTOs\RegisterDTO;
 
 interface RegisterServiceInterface
 {
-    public function register(RegisterDTO $registerDTO);
+    public function register(RegisterDTO $registerDTO): array;
 }

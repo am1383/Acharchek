@@ -2,7 +2,7 @@
 
 namespace App\Modules\Panel\Http\Controllers;
 
-use App\Modules\Admin\Services\Contracts\PanelServiceInterface;
+use App\Modules\Panel\Services\Contracts\PanelServiceInterface;
 use App\Modules\Panel\DTOs\UserPanelInfoDTO;
 use App\Modules\Panel\DTOs\UserPanelServiceDTO;
 use App\Modules\Panel\Requests\UserPanelInfoRequest;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Admin\Services\Contracts;
+namespace App\Modules\Panel\Services\Contracts;
 
 interface PanelServiceInterface
 {

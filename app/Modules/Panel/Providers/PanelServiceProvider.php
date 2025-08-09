@@ -2,7 +2,7 @@
 
 namespace App\Modules\Panel\Providers;
 
-use App\Modules\Admin\Services\Contracts\PanelServiceInterface;
+use App\Modules\Panel\Services\Contracts\PanelServiceInterface;
 use App\Modules\Panel\Services\PanelService;
 use Illuminate\Support\ServiceProvider;
 

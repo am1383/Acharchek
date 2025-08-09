@@ -22,7 +22,9 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone_number' => 'required|string|min:11|regex:/^09\d{9}$/',
+            'phone' => 'required|string|min:11|regex:/^09\d{9}$/',
+            'verify_code' => 'required|string|min:4',
+            'device_info' => 'required|string',
         ];
     }
 }

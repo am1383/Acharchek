@@ -2,27 +2,22 @@
 
 namespace App\Providers;
 
-use App\Core\Services\CacheService;
-use App\Core\Services\Contracts\CacheServiceInterface;
-use App\Core\Services\Contracts\RateLimitServiceInterface;
-use App\Core\Services\Contracts\SMSServiceInterface;
-use App\Core\Services\RateLimitService;
-use App\Core\Services\SMSService;
-use App\Modules\Auth\Models\Business;
-use App\Modules\Auth\Models\BusinesService;
-use App\Modules\Auth\Models\BusinessType;
 use App\Modules\Auth\Models\City;
+use App\Modules\Auth\Models\Information;
+use App\Modules\Auth\Models\LoginTries;
+use App\Modules\Auth\Models\MobileDevice;
 use App\Modules\Auth\Models\Province;
 use App\Modules\Auth\Models\User;
-use App\Modules\Auth\Repositories\Contracts\BusinessRepositoryInterface;
-use App\Modules\Auth\Repositories\Contracts\BusinessServiceRepositoryInterface;
 use App\Modules\Auth\Repositories\Contracts\CityRepositoryInterface;
+use App\Modules\Auth\Repositories\Contracts\InformationRepositoryInterface;
+use App\Modules\Auth\Repositories\Contracts\LoginTriesRepositoryInterface;
+use App\Modules\Auth\Repositories\Contracts\MobileDeviceRepositoryInterface;
 use App\Modules\Auth\Repositories\Contracts\ProvinceRepositoryInterface;
 use App\Modules\Auth\Repositories\Contracts\UserRepositoryInterface;
-use App\Modules\Auth\Repositories\Eloquent\BusinessRepository;
-use App\Modules\Auth\Repositories\Eloquent\BusinessServiceRepository;
-use App\Modules\Auth\Repositories\Eloquent\BusinessTypeRepository;
 use App\Modules\Auth\Repositories\Eloquent\CityRepository;
+use App\Modules\Auth\Repositories\Eloquent\InformationRepository;
+use App\Modules\Auth\Repositories\Eloquent\LoginTriesRepository;
+use App\Modules\Auth\Repositories\Eloquent\MobileDeviceRepository;
 use App\Modules\Auth\Repositories\Eloquent\ProvinceRepository;
 use App\Modules\Auth\Repositories\Eloquent\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -34,10 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(CacheServiceInterface::class, CacheService::class);
-        $this->app->bind(RateLimitServiceInterface::class, RateLimitService::class);
-        $this->app->bind(SMSServiceInterface::class, SMSService::class);
-
         $this->app->bind(UserRepositoryInterface::class, function ($app): UserRepository {
             return new UserRepository($app->make(User::class));
         });
@@ -50,16 +41,16 @@ class AppServiceProvider extends ServiceProvider
             return new ProvinceRepository($app->make(Province::class));
         });
 
-        $this->app->bind(BusinessTypeRepository::class, function ($app): BusinessRepository {
-            return new BusinessRepository($app->make(BusinessType::class));
+        $this->app->bind(InformationRepositoryInterface::class, function ($app): InformationRepository {
+            return new InformationRepository($app->make(Information::class));
         });
 
-        $this->app->bind(BusinessServiceRepositoryInterface::class, function ($app): BusinessServiceRepository {
-            return new BusinessServiceRepository($app->make(BusinesService::class));
+        $this->app->bind(LoginTriesRepositoryInterface::class, function ($app): LoginTriesRepository {
+            return new LoginTriesRepository($app->make(LoginTries::class));
         });
 
-        $this->app->bind(BusinessRepositoryInterface::class, function ($app): BusinessRepository {
-            return new BusinessRepository($app->make(Business::class));
+        $this->app->bind(MobileDeviceRepositoryInterface::class, function ($app): MobileDeviceRepository {
+            return new MobileDeviceRepository($app->make(MobileDevice::class));
         });
     }
 

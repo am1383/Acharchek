@@ -10,5 +10,5 @@ interface UserServiceInterface
 
     public function getSecondUserInformation(string $apiToken): array;
 
-    public function getFullUserInfo(string $apiToken): array;
+    public function getFullUserInformation(string $apiToken): array;
 }

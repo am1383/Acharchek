@@ -29,7 +29,9 @@ class UserService implements UserServiceInterface
         $userInformation = $user->information()
             ->first(['business_name', 'province_id', 'city_id', 'address', 'avatar']);
 
-        return $this->isUserInformationExist($userInformation, $user);
+        if ($error = $this->handleMissingInformation($userInformation, $user)) {
+            return $error;
+        }
 
         return [
             'status' => true,
@@ -53,24 +55,26 @@ class UserService implements UserServiceInterface
         return $userInformation;
     }
 
-    public function getFullUserInfo(string $apiToken): array
+    public function getFullUserInformation(string $apiToken): array
     {
         $user = $this->userRepository
             ->findByApiToken($apiToken, ['id', 'api_token', 'first_name', 'last_name', 'api_token', 'creatd_at']);
 
         $userInformation = $user->information;
 
-        return $this->isUserInformationExist($userInformation, $user);
+        if ($error = $this->handleMissingInformation($userInformation, $user)) {
+            return $error;
+        }
 
         $provinceId = $userInformation->province_id;
         $cityId = $userInformation->city_id;
 
-        if ($provinceId != 0) {
+        if ($provinceId !== 0) {
             $this->locationContext
                 ->provinceRepository->findOrFail($provinceId, ['name']);
         }
 
-        if ($cityId != 0) {
+        if ($cityId !== 0) {
             $this->locationContext
                 ->cityRepository->findOrFail($cityId, ['name']);
         }
@@ -103,11 +107,14 @@ class UserService implements UserServiceInterface
 
         return [
             'status' => true,
-            'data' => $firstData + $secondData,
+            'data' => [
+                'user' => $user->toArray(),
+                'details' => $secondData,
+            ],
         ];
     }
 
-    private function isUserInformationExist($userInformation, User $user): ?array
+    private function handleMissingInformation($userInformation, User $user): ?array
     {
         if (! $userInformation) {
             $user->information()->create(['phone' => $user->phone]);

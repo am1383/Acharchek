@@ -38,6 +38,6 @@ class UserController
         $fullUserInfoDTO = new FullUserInfoDTO($request->validated());
 
         return new FullUserInfoResource($this->userService
-            ->getFullUserInfo($fullUserInfoDTO->api_token));
+            ->getFullUserInformation($fullUserInfoDTO->api_token));
     }
 }

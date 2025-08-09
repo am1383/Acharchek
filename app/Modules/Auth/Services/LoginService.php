@@ -136,9 +136,9 @@ class LoginService implements LoginServiceInterface
         $sentTime = new Carbon($sentAt);
         $diffTime = $sentTime->diffInSeconds(now());
         $timeToExpire = (int) $this->settingRepository->findByKey('verify_phone_time');
-        $marginExpireTime = 5;
+        $gracePeriod = 5;
 
-        return $diffTime > $timeToExpire + $marginExpireTime;
+        return $diffTime > $timeToExpire + $gracePeriod;
     }
 
     private function prepareLoginResponse(string $apiToken, bool $newUser, bool $infoFill, bool $fillServices, int $clientPolicy): array

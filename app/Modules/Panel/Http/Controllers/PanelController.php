@@ -20,7 +20,6 @@ class PanelController
 
         return new UserPanelInfoResource($this->panelService
             ->getUserPanelInfo($userPanelInfoDTO->api_token));
-
     }
 
     public function userPanelService(UserPanelServiceRequest $request): UserPanelServiceResource

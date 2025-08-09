@@ -5,6 +5,7 @@ namespace App\Modules\Panel\Services;
 use App\Constants\MessageCode;
 use App\Core\Repositories\Contracts\UserRepositoryInterface;
 use App\Modules\Admin\Services\Contracts\PanelServiceInterface;
+use App\Modules\Auth\Models\User;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -33,7 +34,15 @@ class PanelService implements PanelServiceInterface
             ];
         }
 
-        $data = [
+        return [
+            'status' => true,
+            'data' => $this->formatUserPanelData($user, $userInformation),
+        ];
+    }
+
+    private function formatUserPanelData(User $user, $userInformation): array
+    {
+        return [
             'user_id' => $user->id,
             'active' => $userInformation->computeIsActive(),
             'expire_date' => $userInformation->panelExpireDate(),
@@ -42,11 +51,6 @@ class PanelService implements PanelServiceInterface
             'ban' => $userInformation->isBan(),
             'disabled' => $userInformation->accountDisabled(),
             'sms_credit' => $userInformation->sms_credit,
-        ];
-
-        return [
-            'status' => true,
-            'data' => $data,
         ];
     }
 

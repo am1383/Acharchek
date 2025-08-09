@@ -26,7 +26,11 @@ class MessageCode
 
     public const ERROR_USER_REGISTRATION_100 = 'error.user_registration.100';
 
-    public const ERROR_DATABASE_100 = 'error.database.100';
+    public const ERROR_VERIFICATION_EXPIRATION_9 = '9';
+
+    public const ERROR_DATABASE_10 = '10';
+
+    public const ERROR_VERIFICATION_CODE_11 = '11';
 
     public const ERROR_BUSINESS_100 = 'error.business.100';
 
@@ -48,7 +52,7 @@ class MessageCode
 
     public const ERROR_USER_100 = 'error.user.100';
 
-    public static function messageText(?string $code): string|array
+    public static function messageText(?string $code): string
     {
         $messages = [
             self::ERROR_SMS_100 => 'مشکلی در هنگام ارسال کد تایید به شماره موبایل شما پیش آمد. لطفا دوباره تلاش کنید. اگر که این مشکل حل نشد لطفا با پشتیبانی تماس بگیرید!',
@@ -67,7 +71,11 @@ class MessageCode
 
             self::ERROR_USER_REGISTRATION_100 => 'جلسه ثبت نام یافت نشد!',
 
-            self::ERROR_DATABASE_100 => 'مشکلی در هنگام ثبت اطلاعات در دیتابیس پیش آمد. لطفا دوباره تلاش کنید!',
+            self::ERROR_VERIFICATION_EXPIRATION_9 => 'کد تایید منقضی شده است',
+
+            self::ERROR_DATABASE_10 => 'مشکلی در هنگام ثبت اطلاعات پیش آمد. لطفا دوباره تلاش کنید!',
+
+            self::ERROR_VERIFICATION_CODE_11 => 'کد تایید اشتباه است',
 
             self::ERROR_BUSINESS_100 => 'شما هنوز هیچ کسب و کاری ثبت نکرده اید لطفا ابتدا کسب و کار خود را ثبت و مشخص کنید!',
             self::ERROR_BUSINESS_101 => 'مشتری با این شماره موبایل قبلا در کسب و کار ثبت شده است!',
@@ -84,10 +92,6 @@ class MessageCode
             self::ERROR_USER_100 => 'حساب کاربری کاربر (شما) مسدود شده است. لطفا با پشتیبانی تماس بگیرید!',
         ];
 
-        if ($code) {
-            return $messages[$code];
-        }
-
-        return $messages;
+        return $messages[$code];
     }
 }

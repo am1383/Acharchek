@@ -9,6 +9,11 @@ class BaseRepository implements BaseRepositoryInterface
 {
     public function __construct(protected Model $model) {}
 
+    public function insert(array $attributes): void
+    {
+        $this->model->insert($attributes);
+    }
+
     public function create(array $attributes): Model
     {
         return $this->model->create($attributes);

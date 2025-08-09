@@ -14,6 +14,8 @@ interface BaseRepositoryInterface
      */
     public function create(array $attributes): Model;
 
+    public function insert(array $attributes): void;
+
     public function updateOrFail(array $attributes): bool;
 
     public function findOrFail(int $id, array $columns = ['*']): Model;

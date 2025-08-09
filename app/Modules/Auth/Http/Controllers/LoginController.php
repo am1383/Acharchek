@@ -3,10 +3,8 @@
 namespace App\Modules\Auth\Http\Controllers;
 
 use App\Modules\Auth\DTOs\LoginDTO;
-use App\Modules\Auth\DTOs\VerifyLoginDTO;
 use App\Modules\Auth\Requests\LoginRequest;
 use App\Modules\Auth\Resources\LoginResource;
-use App\Modules\Auth\Resources\VerifyLoginResource;
 use App\Modules\Auth\Services\Contracts\LoginServiceInterface;
 
 class LoginController
@@ -15,16 +13,9 @@ class LoginController
 
     public function login(LoginRequest $request): LoginResource
     {
-        $loginDTO = LoginDTO::fromRequest($request->validated());
+        $loginDTO = new LoginDTO($request->validated());
 
-        return new LoginResource($this->loginService->handleLogin($loginDTO));
-    }
-
-    public function verifyLogin(LoginRequest $request): VerifyLoginResource
-    {
-        $verifyLoginDTO = VerifyLoginDTO::fromRequest($request->validated());
-
-        return new VerifyLoginResource($this->loginService
-            ->verifyLogin($verifyLoginDTO));
+        return new LoginResource($this->loginService
+            ->handleLogin($loginDTO->phone, $loginDTO->verify_code, $loginDTO->device_info));
     }
 }

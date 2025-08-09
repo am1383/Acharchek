@@ -63,9 +63,17 @@ class PanelService implements PanelServiceInterface
 
         $result = $this->prepareServiceResult($services);
 
+        return [
+            'status' => true,
+            'data' => $this->formatUserPanelServiceData($result),
+        ];
+    }
+
+    private function formatUserPanelServiceData(array $result): array
+    {
         $now = Verta::now();
 
-        $data = [
+        return [
             'services' => $result,
             'date' => [
                 'full' => $now->formatDate(),
@@ -74,11 +82,6 @@ class PanelService implements PanelServiceInterface
                 'month' => $now->month,
                 'day' => $now->day,
             ],
-        ];
-
-        return [
-            'status' => true,
-            'data' => $data,
         ];
     }
 

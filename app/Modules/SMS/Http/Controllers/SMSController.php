@@ -11,7 +11,7 @@ class SMSController
 {
     public function __construct(private SMSServiceInterface $SMSService) {}
 
-    public function send(SendSMSRequest $request)
+    public function send(SendSMSRequest $request): SMSResource
     {
         $SMSDTO = new SendSMSDTO($request->validated());
 

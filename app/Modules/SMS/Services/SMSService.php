@@ -30,6 +30,7 @@ class SMSService implements SMSServiceInterface
         }
 
         $verifyCode = $this->generateVerifyCode();
+
         sendAuthVerifyCodeMobile($phoneNumber, $verifyCode, $hashLink);
 
         $this->storeLoginTries($phoneNumber, $verifyCode);
@@ -98,5 +99,13 @@ class SMSService implements SMSServiceInterface
     private function generateVerifyCode(int $length = 4): string
     {
         return str_pad((string) random_int(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
+    }
+
+    public function getPriceInformation(): array
+    {
+        return [
+            'single_sms_price' => $this->settingRepository->findByKey('single_sms_price'),
+            'group_sms_price' => $this->settingRepository->findByKey('group_sms_price'),
+        ];
     }
 }

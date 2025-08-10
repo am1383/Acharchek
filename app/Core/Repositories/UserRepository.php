@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Auth\Repositories\Eloquent;
+namespace App\Core\Repositories;
 
 use App\Core\Repositories\BaseRepository;
 use App\Core\Repositories\Contracts\UserRepositoryInterface;
-use App\Modules\Auth\Models\User;
+use App\Core\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**

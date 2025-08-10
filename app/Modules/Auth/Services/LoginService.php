@@ -26,7 +26,8 @@ class LoginService implements LoginServiceInterface
             return $this->loginOrCreateUser($phoneNumber, $deviceInfo, $clientPolicy);
         }
 
-        $session = $this->authContext->loginTriesRepository->findByPhoneNumberOrFail($phoneNumber, ['id', 'sent_at', 'verify_code']);
+        $session = $this->authContext->loginTriesRepository
+            ->findByPhoneNumberOrFail($phoneNumber, ['id', 'sent_at', 'verify_code']);
 
         if ($this->isVerifyCodeExpired($session->sent_at)) {
             $this->authContext->loginTriesRepository->updateOrFailById($session->id, ['finished' => 1]);
@@ -53,7 +54,8 @@ class LoginService implements LoginServiceInterface
 
     private function loginOrCreateUser(string $phoneNumber, string $deviceInfo, int $clientPolicy): array
     {
-        $user = $this->authContext->userRepository->findByPhoneNumber($phoneNumber, ['id', 'api_token']);
+        $user = $this->authContext->userRepository
+            ->findByPhoneNumber($phoneNumber, ['id', 'api_token']);
 
         if ($user) {
             return $this->buildUserLoginResponse($user, $deviceInfo, $phoneNumber, $clientPolicy, false);
@@ -119,7 +121,7 @@ class LoginService implements LoginServiceInterface
 
     private function storeDeviceInfo(int $userId, string $deviceInfo): void
     {
-        $this->authContext->mobileDeviceRepository->insert([
+        $this->authContext->mobileDeviceRepository->create([
             'user_id' => $userId,
             'device_info' => $deviceInfo,
             'date' => now()->toDateTimeString(),

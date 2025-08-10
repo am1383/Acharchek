@@ -2,7 +2,7 @@
 
 namespace App\Core\Repositories\Contracts;
 
-use App\Modules\Auth\Models\User;
+use App\Core\Models\User;
 
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {

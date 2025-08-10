@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Modules\Auth\Models;
+namespace App\Core\Models;
 
+use App\Modules\Auth\Models\Information;
+use App\Modules\Auth\Models\MessageInbox;
+use App\Modules\Auth\Models\Service;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;

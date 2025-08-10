@@ -1,8 +1,8 @@
 <?php
 
+use App\Core\Repositories\Contracts\LoginTriesRepositoryInterface;
 use App\Core\Repositories\Contracts\UserRepositoryInterface;
 use App\Modules\Auth\Repositories\Contracts\InformationRepositoryInterface;
-use App\Modules\Auth\Repositories\Contracts\LoginTriesRepositoryInterface;
 use App\Modules\Auth\Repositories\Contracts\MobileDeviceRepositoryInterface;
 
 class AuthContext

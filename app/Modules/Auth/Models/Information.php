@@ -2,6 +2,7 @@
 
 namespace App\Modules\Auth\Models;
 
+use App\Core\Models\User;
 use Carbon\Carbon;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Database\Eloquent\Model;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\User\Services\Contracts;
 
-use App\Modules\Auth\Models\User;
+use App\Core\Models\User;
 
 interface UserServiceInterface
 {

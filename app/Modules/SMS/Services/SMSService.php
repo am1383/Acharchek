@@ -16,7 +16,8 @@ class SMSService implements SMSServiceInterface
 
     public function send(string $phoneNumber, string $hashLink): array
     {
-        $verifyPhoneDelay = (int) $this->settingRepository->findByKey('verify_phone_delay');
+        $verifyPhoneDelay = (int) $this->settingRepository
+            ->findByKey('verify_phone_delay');
 
         if ($this->isSpecialUser($phoneNumber)) {
             return $this->prepareResultData($phoneNumber, $verifyPhoneDelay);

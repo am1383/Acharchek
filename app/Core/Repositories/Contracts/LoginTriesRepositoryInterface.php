@@ -2,7 +2,7 @@
 
 namespace App\Core\Repositories\Contracts;
 
-use App\Modules\Auth\Models\LoginTries;
+use App\Core\Models\LoginTries;
 
 interface LoginTriesRepositoryInterface extends BaseRepositoryInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Auth\Repositories\Eloquent;
+namespace App\Core\Repositories;
 
 use App\Core\Repositories\BaseRepository;
-use App\Modules\Auth\Models\LoginTries;
-use App\Modules\Auth\Repositories\Contracts\LoginTriesRepositoryInterface;
+use App\Core\Repositories\Contracts\LoginTriesRepositoryInterface;
+use App\Core\Models\LoginTries;
 use Illuminate\Database\Eloquent\Model;
 
 class LoginTriesRepository extends BaseRepository implements LoginTriesRepositoryInterface

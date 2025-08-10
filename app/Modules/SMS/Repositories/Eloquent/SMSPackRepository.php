@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Auth\Repositories\Eloquent;
+namespace App\Modules\SMS\Repositories\Eloquent;
 
 use App\Core\Repositories\BaseRepository;
 use App\Modules\SMS\Repositories\Contracts\SMSPackRepositoryInterface;

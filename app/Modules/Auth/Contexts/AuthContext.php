@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Modules\Auth\Contexts;
+
 use App\Core\Repositories\Contracts\LoginTriesRepositoryInterface;
 use App\Core\Repositories\Contracts\UserRepositoryInterface;
 use App\Modules\Auth\Repositories\Contracts\InformationRepositoryInterface;

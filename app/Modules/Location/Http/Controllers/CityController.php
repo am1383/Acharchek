@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Modules\Panel\Http\Controllers;
+namespace App\Modules\Location\Http\Controllers;
 
 use App\Modules\Location\DTOs\CityDetailsDTO;
 use App\Modules\Location\DTOs\CityDTO;
 use App\Modules\Location\Requests\CityDetailsRequest;
 use App\Modules\Location\Requests\CityRequest;
+use App\Modules\Location\Resources\CityDetailsResource;
+use App\Modules\Location\Resources\CityResource;
 use App\Modules\Location\Services\Contracts\CityServiceInterface;
-use App\Modules\Loction\Resources\CityDetailsResource;
-use App\Modules\Loction\Resources\CityResource;
 
 class CityController
 {

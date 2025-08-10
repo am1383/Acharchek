@@ -6,8 +6,8 @@ use App\Constants\MessageCode;
 use App\Constants\PolicyConstants;
 use App\Constants\UserConstants;
 use App\Core\Repositories\Contracts\SettingRepositoryInterface;
+use App\Modules\Auth\Contexts\AuthContext;
 use App\Modules\Auth\Services\Contracts\LoginServiceInterface;
-use AuthContext;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 

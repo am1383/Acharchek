@@ -4,8 +4,9 @@ namespace App\Modules\Location\Http\Controllers;
 
 use App\Modules\Location\DTOs\ProvinceDetailsDTO;
 use App\Modules\Location\Requests\ProvinceDetailsRequest;
+use App\Modules\Location\Resources\ProvinceDetailsResource;
+use App\Modules\Location\Resources\ProvinceResource;
 use App\Modules\Location\Services\Contracts\ProvinceServiceInterface;
-use App\Modules\Loction\Resources\ProvinceResource;
 
 class ProvinceController
 {
@@ -17,11 +18,11 @@ class ProvinceController
             ->getProvinces());
     }
 
-    public function details(ProvinceDetailsRequest $request): ProvinceResource
+    public function details(ProvinceDetailsRequest $request): ProvinceDetailsResource
     {
         $provinceDetailsDTO = new ProvinceDetailsDTO($request->validated());
 
-        return new ProvinceResource($this->provinceService
+        return new ProvinceDetailsResource($this->provinceService
             ->getProvinceDetails($provinceDetailsDTO->id));
     }
 }

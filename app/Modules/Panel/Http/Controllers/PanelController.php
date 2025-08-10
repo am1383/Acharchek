@@ -2,13 +2,13 @@
 
 namespace App\Modules\Panel\Http\Controllers;
 
-use App\Modules\Panel\Services\Contracts\PanelServiceInterface;
 use App\Modules\Panel\DTOs\UserPanelInfoDTO;
 use App\Modules\Panel\DTOs\UserPanelServiceDTO;
 use App\Modules\Panel\Requests\UserPanelInfoRequest;
 use App\Modules\Panel\Requests\UserPanelServiceRequest;
 use App\Modules\Panel\Resources\UserPanelInfoResource;
 use App\Modules\Panel\Resources\UserPanelServiceResource;
+use App\Modules\Panel\Services\Contracts\PanelServiceInterface;
 
 class PanelController
 {

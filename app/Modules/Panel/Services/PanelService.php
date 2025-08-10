@@ -3,9 +3,9 @@
 namespace App\Modules\Panel\Services;
 
 use App\Constants\MessageCode;
+use App\Core\Models\User;
 use App\Core\Repositories\Contracts\UserRepositoryInterface;
 use App\Modules\Panel\Services\Contracts\PanelServiceInterface;
-use App\Core\Models\User;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Database\Eloquent\Collection;
 

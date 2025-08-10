@@ -2,9 +2,8 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Repositories\BaseRepository;
-use App\Core\Repositories\Contracts\LoginTriesRepositoryInterface;
 use App\Core\Models\LoginTries;
+use App\Core\Repositories\Contracts\LoginTriesRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class LoginTriesRepository extends BaseRepository implements LoginTriesRepositoryInterface

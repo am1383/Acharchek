@@ -2,9 +2,8 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Repositories\BaseRepository;
-use App\Core\Repositories\Contracts\UserRepositoryInterface;
 use App\Core\Models\User;
+use App\Core\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**

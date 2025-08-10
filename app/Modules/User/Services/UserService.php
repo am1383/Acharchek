@@ -3,9 +3,9 @@
 namespace App\Modules\User\Services;
 
 use App\Constants\MessageCode;
+use App\Core\Models\User;
 use App\Core\Repositories\Contracts\UserRepositoryInterface;
 use App\Modules\Auth\Contexts\LocationContext;
-use App\Core\Models\User;
 use App\Modules\User\Services\Contracts\UserServiceInterface;
 
 class UserService implements UserServiceInterface
@@ -87,7 +87,7 @@ class UserService implements UserServiceInterface
             'city_name' => (isset($city) && $city) ? $city->name : null,
             'address' => $userInformation->address,
             'avatar' => $userInformation->avatar == 'default.png' ? null : $userInformation->avatar,
-            'avatar_link' => (($userInformation->avatar && $userInformation->avatar != 'default.png') ? 
+            'avatar_link' => (($userInformation->avatar && $userInformation->avatar != 'default.png') ?
                 asset('avatars/'.$userInformation->avatar) : null),
 
             'panel' => [

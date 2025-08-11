@@ -26,10 +26,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->where('api_token', $apiToken)
             ->first();
     }
-
-    public function getAllIds(): User
-    {
-        return $this->model->select(['id'])
-            ->get();
-    }
 }

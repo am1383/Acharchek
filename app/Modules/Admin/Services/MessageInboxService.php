@@ -18,7 +18,7 @@ class MessageInboxService implements MessageInboxServiceInterface
     {
         if ($storeMessageInboxDTO->target_users === 'all_users') {
             $users = $this->userRepository
-                ->getAllIds()
+                ->get(['id'])
                 ->toArray();
         }
 

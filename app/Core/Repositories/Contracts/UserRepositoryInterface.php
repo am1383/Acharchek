@@ -9,6 +9,4 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function findByPhoneNumber(string $phoneNumber, array $columns = ['*']): User;
 
     public function findByApiToken(string $apiToken, array $columns = ['*']): User;
-
-    public function getAllIds(): User;
 }

@@ -2,8 +2,8 @@
 
 namespace App\Modules\Auth\Repositories\Contracts;
 
+use App\Core\Models\City;
 use App\Core\Repositories\Contracts\BaseRepositoryInterface;
-use App\Modules\Auth\Models\City;
 use Illuminate\Database\Eloquent\Collection;
 
 interface CityRepositoryInterface extends BaseRepositoryInterface

@@ -2,9 +2,9 @@
 
 namespace App\Modules\User\Providers;
 
+use App\Core\Models\User;
 use App\Core\Repositories\Contracts\UserRepositoryInterface;
-use App\Modules\Auth\Models\User;
-use App\Modules\Auth\Repositories\Eloquent\UserRepository;
+use App\Core\Repositories\UserRepository;
 use App\Modules\User\Services\Contracts\UserServiceInterface;
 use App\Modules\User\Services\UserService;
 use Illuminate\Support\ServiceProvider;

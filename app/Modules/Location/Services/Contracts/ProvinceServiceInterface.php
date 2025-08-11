@@ -2,7 +2,7 @@
 
 namespace App\Modules\Location\Services\Contracts;
 
-use App\Modules\Auth\Models\Province;
+use App\Core\Models\Province;
 use Illuminate\Database\Eloquent\Collection;
 
 interface ProvinceServiceInterface

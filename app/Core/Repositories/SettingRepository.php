@@ -15,7 +15,7 @@ class SettingRepository implements SettingRepositoryInterface
             ->value('value');
     }
 
-    public function updateByKey(string $key, $value): bool
+    public function updateByKey(string $key, string $value): bool
     {
         return $this->model->where('key', $key)
             ->update(compact('value'));

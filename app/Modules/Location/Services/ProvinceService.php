@@ -2,7 +2,7 @@
 
 namespace App\Modules\Location\Services;
 
-use App\Modules\Auth\Models\Province;
+use App\Core\Models\Province;
 use App\Modules\Auth\Repositories\Contracts\ProvinceRepositoryInterface;
 use App\Modules\Location\Services\Contracts\ProvinceServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,7 +14,7 @@ class ProvinceService implements ProvinceServiceInterface
     public function getProvinces(): Collection
     {
         return $this->provinceRepository
-            ->getProvinces();
+            ->get();
     }
 
     public function getProvinceDetails(int $id): Province

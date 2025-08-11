@@ -2,7 +2,7 @@
 
 namespace App\Modules\Location\Services\Contracts;
 
-use App\Modules\Auth\Models\City;
+use App\Core\Models\City;
 use Illuminate\Database\Eloquent\Collection;
 
 interface CityServiceInterface

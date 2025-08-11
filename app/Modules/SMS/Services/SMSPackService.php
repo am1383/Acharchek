@@ -18,7 +18,7 @@ class SMSPackService implements SMSPackServiceInterface
 
     public function getSMSPacks(string $appVersion): array
     {
-        $smsPacks = $this->sMSPackRepository->getSMSPacks();
+        $smsPacks = $this->sMSPackRepository->get();
         $appVersion = $this->normalizeAppVersion($appVersion);
 
         if ($this->shouldIncludeFaq($appVersion)) {

@@ -6,5 +6,5 @@ interface SettingRepositoryInterface
 {
     public function findByKey(string $key): string;
 
-    public function updateByKey(string $key, $value): bool;
+    public function updateByKey(string $key, string $value): bool;
 }

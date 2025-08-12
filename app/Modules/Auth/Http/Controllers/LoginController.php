@@ -13,9 +13,9 @@ class LoginController
 
     public function login(LoginRequest $request): LoginResource
     {
-        $loginDTO = new LoginDTO($request->validated());
+        $dto = new LoginDTO($request->validated());
 
         return new LoginResource($this->loginService
-            ->handleLogin($loginDTO->phone, $loginDTO->verify_code, $loginDTO->device_info));
+            ->handleLogin($dto->phone, $dto->verify_code, $dto->device_info));
     }
 }

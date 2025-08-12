@@ -14,10 +14,10 @@ class SMSController
 
     public function send(SendSMSRequest $request): SMSResource
     {
-        $smsDTO = new SendSMSDTO($request->validated());
+        $dto = new SendSMSDTO($request->validated());
 
         return new SMSResource($this->SMSService
-            ->send($smsDTO->phone, $smsDTO->hash_link));
+            ->send($dto->phone, $dto->hash_link));
     }
 
     public function priceInformation(): SMSPriceInformationResource

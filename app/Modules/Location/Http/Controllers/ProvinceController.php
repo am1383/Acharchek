@@ -20,9 +20,9 @@ class ProvinceController
 
     public function details(ProvinceDetailsRequest $request): ProvinceDetailsResource
     {
-        $provinceDetailsDTO = new ProvinceDetailsDTO($request->validated());
+        $dto = new ProvinceDetailsDTO($request->validated());
 
         return new ProvinceDetailsResource($this->provinceService
-            ->getProvinceDetails($provinceDetailsDTO->id));
+            ->getProvinceDetails($dto->id));
     }
 }

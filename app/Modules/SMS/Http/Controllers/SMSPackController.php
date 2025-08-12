@@ -16,17 +16,17 @@ class SMSPackController
 
     public function show(SMSPackRequest $request): SMSPackResource
     {
-        $smsPackDTO = new SMSPackDTO($request->header('AppVersion'));
+        $dto = new SMSPackDTO($request->header('AppVersion'));
 
         return new SMSPackResource($this->sMSPackService
-            ->getSMSPacks($smsPackDTO->AppVersion));
+            ->getSMSPacks($dto->AppVersion));
     }
 
     public function details(SMSPackDetailsRequest $request): SMSPackDetailsResource
     {
-        $smsPackDetailsDTO = new SMSPackDetailsDTO($request->validated());
+        $dto = new SMSPackDetailsDTO($request->validated());
 
         return new SMSPackDetailsResource($this->sMSPackService
-            ->getDetailsById($smsPackDetailsDTO->id));
+            ->getDetailsById($dto->id));
     }
 }

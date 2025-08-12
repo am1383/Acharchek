@@ -20,9 +20,9 @@ class PanelPackController
 
     public function details(PanelPackDetailsRequest $request): PanelPackDetailsResource
     {
-        $panelPackDetailsDTO = new PanelPackDetailsDTO($request->validated());
+        $dto = new PanelPackDetailsDTO($request->validated());
 
         return new PanelPackDetailsResource($this->panelPackService
-            ->getDetailsById($panelPackDetailsDTO->id));
+            ->getDetailsById($dto->id));
     }
 }

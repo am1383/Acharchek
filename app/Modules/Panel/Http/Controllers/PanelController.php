@@ -16,17 +16,17 @@ class PanelController
 
     public function userPanelInfo(UserPanelInfoRequest $request): UserPanelInfoResource
     {
-        $userPanelInfoDTO = new UserPanelInfoDTO($request->validated());
+        $dto = new UserPanelInfoDTO($request->validated());
 
         return new UserPanelInfoResource($this->panelService
-            ->getUserPanelInfo($userPanelInfoDTO->api_token));
+            ->getUserPanelInfo($dto->api_token));
     }
 
     public function userPanelService(UserPanelServiceRequest $request): UserPanelServiceResource
     {
-        $userPanelServiceDTO = new UserPanelServiceDTO($request->validated());
+        $dto = new UserPanelServiceDTO($request->validated());
 
         return new UserPanelServiceResource($this->panelService
-            ->getUserPanelService($userPanelServiceDTO->api_token));
+            ->getUserPanelService($dto->api_token));
     }
 }

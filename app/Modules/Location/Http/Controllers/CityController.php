@@ -16,17 +16,17 @@ class CityController
 
     public function show(CityRequest $request): CityResource
     {
-        $cityDTO = new CityDTO($request->validated());
+        $dto = new CityDTO($request->validated());
 
         return new CityResource($this->cityService
-            ->getCities($cityDTO->province_id));
+            ->getCities($dto->province_id));
     }
 
     public function details(CityDetailsRequest $request): CityDetailsResource
     {
-        $cityDetailsDTO = new CityDetailsDTO($request->validated());
+        $dto = new CityDetailsDTO($request->validated());
 
         return new CityDetailsResource($this->cityService
-            ->getCityDetailsById($cityDetailsDTO->id));
+            ->getCityDetailsById($dto->id));
     }
 }

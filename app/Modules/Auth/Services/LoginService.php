@@ -70,14 +70,6 @@ class LoginService implements LoginServiceInterface
             'api_token' => $apiToken,
         ]);
 
-        if (! $newUser) {
-            return [
-                'status' => false,
-                'message' => MessageCode::messageText(MessageCode::ERROR_DATABASE_10),
-                'message_code' => MessageCode::ERROR_DATABASE_10,
-            ];
-        }
-
         $newUser->information()->create(['phone' => $phoneNumber]);
         $newUser->services()->attach(range(1, 13));
 

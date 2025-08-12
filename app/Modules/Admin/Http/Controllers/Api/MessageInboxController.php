@@ -13,9 +13,9 @@ class MessageInboxController
 
     public function store(StoreMessageInboxRequest $request): MessageInboxResource
     {
-        $storeMessageInboxDTO = new StoreMessageInboxDTO($request->validated());
+        $dto = new StoreMessageInboxDTO($request->validated());
 
         return new MessageInboxResource($this->messageInboxService
-            ->store($storeMessageInboxDTO));
+            ->store($dto));
     }
 }

@@ -19,25 +19,25 @@ class UserController
 
     public function userInformation(UserInfoRequest $request): UserInfoResource
     {
-        $userInfoDTO = new UserInfoDTO($request->validated());
+        $dto = new UserInfoDTO($request->validated());
 
         return new UserInfoResource($this->userService
-            ->getInformation($userInfoDTO->api_token));
+            ->getInformation($dto->api_token));
     }
 
     public function secondUserInformation(SecondUserInfoRequest $request): SecondUserInfoResource
     {
-        $secondUserInfoDTO = new SecondUserInfoDTO($request->validated());
+        $dto = new SecondUserInfoDTO($request->validated());
 
         return new SecondUserInfoResource($this->userService
-            ->getSecondUserInformation($secondUserInfoDTO->api_token));
+            ->getSecondUserInformation($dto->api_token));
     }
 
     public function fullUserInfo(FullUserInfoRequest $request): FullUserInfoResource
     {
-        $fullUserInfoDTO = new FullUserInfoDTO($request->validated());
+        $dto = new FullUserInfoDTO($request->validated());
 
         return new FullUserInfoResource($this->userService
-            ->getFullUserInformation($fullUserInfoDTO->api_token));
+            ->getFullUserInformation($dto->api_token));
     }
 }

@@ -27,7 +27,7 @@ class LoginService implements LoginServiceInterface
         }
 
         $session = $this->authContext->loginTriesRepository
-            ->findByPhoneNumberOrFail($phoneNumber, ['id', 'sent_at', 'verify_code']);
+            ->findByPhoneNumberOrFail($phoneNumber, 0, ['id', 'sent_at', 'verify_code']);
 
         if ($this->isVerifyCodeExpired($session->sent_at)) {
             $this->authContext->loginTriesRepository->updateOrFailById($session->id, ['finished' => 1]);

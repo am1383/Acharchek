@@ -41,7 +41,7 @@ class SMSService implements SMSServiceInterface
     private function isPhoneNumberLocked(string $phoneNumber, int $delayInSeconds): ?array
     {
         $record = $this->loginTriesRepository
-            ->findByPhoneNumberOrFail($phoneNumber, ['id', 'sent_at']);
+            ->findByPhoneNumberOrFail($phoneNumber, 0, ['id', 'sent_at']);
 
         $sentAt = new Carbon($record->sent_at);
         $elapsed = $sentAt->diffInSeconds(now());

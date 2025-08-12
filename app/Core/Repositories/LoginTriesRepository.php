@@ -10,10 +10,10 @@ class LoginTriesRepository extends BaseRepository implements LoginTriesRepositor
 {
     public function __construct(protected Model $model) {}
 
-    public function findByPhoneNumberOrFail(string $phoneNumber, array $columns = ['*']): LoginTries
+    public function findByPhoneNumberOrFail(string $phoneNumber, int $isCustomer, array $columns = ['*']): LoginTries
     {
         return $this->model->select($columns)
-            ->where('is_customer', 0)
+            ->where('is_customer', $isCustomer)
             ->where('phone', $phoneNumber)
             ->where('finished', 0)
             ->firstOrFail();

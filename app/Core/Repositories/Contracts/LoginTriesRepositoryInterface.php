@@ -6,7 +6,7 @@ use App\Core\Models\LoginTries;
 
 interface LoginTriesRepositoryInterface extends BaseRepositoryInterface
 {
-    public function findByPhoneNumberOrFail(string $phoneNumber, array $columns = ['*']): LoginTries;
+    public function findByPhoneNumberOrFail(string $phoneNumber, int $isCustomer, array $columns = ['*']): LoginTries;
 
     public function updateOrFailById(int $Id, array $attributes): void;
 }

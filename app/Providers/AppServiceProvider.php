@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Modules\Admin\Providers\AdminServiceProvider;
 use App\Modules\Auth\Providers\AuthServiceProvider;
+use App\Modules\Customer\Providers\CustomerServiceProvider;
 use App\Modules\Location\Providers\LocationServiceProvider;
 use App\Modules\Panel\Providers\PanelServiceProvider;
 use App\Modules\SMS\Providers\SMSServiceProvider;
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->register(PanelServiceProvider::class);
         $this->app->register(SMSServiceProvider::class);
         $this->app->register(LocationServiceProvider::class);
+        $this->app->register(CustomerServiceProvider::class);
     }
 
     /**

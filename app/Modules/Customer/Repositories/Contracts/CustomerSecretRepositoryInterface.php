@@ -8,4 +8,6 @@ use App\Modules\Customer\Models\CustomerSecret;
 interface CustomerSecretRepositoryInterface extends BaseRepositoryInterface
 {
     public function findByPhoneNumberOrFail(string $phoneNumber, array $columns): CustomerSecret;
+
+    public function findOrFailByCustomerSecret(string $customerSecret, array $columns = ['*']): CustomerSecret;
 }

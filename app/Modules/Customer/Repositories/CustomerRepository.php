@@ -4,6 +4,7 @@ namespace App\Modules\Customer\Repositories;
 
 use App\Modules\Customer\Models\Customer;
 use App\Modules\Customer\Repositories\Contracts\CustomerRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class CustomerRepository implements CustomerRepositoryInterface
@@ -21,5 +22,12 @@ class CustomerRepository implements CustomerRepositoryInterface
         return $this->model->select($columns)
             ->where('phone', $phoneNumber)
             ->firstOrFail();
+    }
+
+    public function getByPhoneNumber(string $phoneNumber, array $columns = ['*']): Collection
+    {
+        return $this->model->select($columns)
+            ->where('phone', $phoneNumber)
+            ->get();
     }
 }

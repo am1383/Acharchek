@@ -154,4 +154,35 @@ class CustomerService implements CustomerServiceInterface
             'secret' => $secretValue,
         ]);
     }
+
+    public function getPhoneNumber(string $customerSecret): array
+    {
+        $secret = $this->customerSecretRepository
+            ->findOrFailByCustomerSecret($customerSecret, ['customer_phone']);
+
+        $customerPhone = $secret->customer_phone;
+
+        $customers = $this->customerRepository
+            ->getByPhoneNumber($customerPhone, ['id', 'point', 'car_tag'])
+            ->toArray();
+
+        return [
+            'status' => true,
+            'data' => [
+                'customer_phone' => $customerPhone,
+                'customer_point' => $this->calculateCustomerPoint($customers),
+            ],
+        ];
+    }
+
+    private function calculateCustomerPoint(array $customers): int
+    {
+        $customerPoint = 0;
+
+        foreach ($customers as $customer) {
+            $customerPoint += (int) $customer['point'];
+        }
+
+        return $customerPoint;
+    }
 }

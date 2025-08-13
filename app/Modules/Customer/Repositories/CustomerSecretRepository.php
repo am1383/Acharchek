@@ -17,4 +17,11 @@ class CustomerSecretRepository extends BaseRepository implements CustomerSecretR
             ->where('phone_customer', $phoneNumber)
             ->firstOrFail();
     }
+
+    public function findOrFailByCustomerSecret(string $customerSecret, array $columns = ['*']): CustomerSecret
+    {
+        return $this->model->select($columns)
+            ->where('secret', $customerSecret)
+            ->firstOrFail();
+    }
 }
